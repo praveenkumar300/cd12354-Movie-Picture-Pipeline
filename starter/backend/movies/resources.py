@@ -9,6 +9,7 @@ movies = {
     "789": {"title": "A Quiet Place", "description": "Scary monsters"},
 }
 
+
 # comment added to test the ci pipeline
 class Movies(MethodView):
     def get(self, movie_id):
