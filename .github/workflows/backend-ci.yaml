@@ -78,8 +78,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Verify backend Dockerfile
+        working-directory: starter/backend
+        run: |
+          pwd
+          ls -la
+          test -f Dockerfile
+
       - name: Build backend Docker image
         working-directory: starter/backend
         run: |
-          docker build \
-            --tag mp-backend:${{ github.sha }} .
+          docker build --tag mp-backend:${{ github.sha }} .
