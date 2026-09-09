@@ -95,12 +95,12 @@ jobs:
         working-directory: starter/backend
         run: |
           docker build \
-            --tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} .
+            --tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
 
       - name: Push backend image to ECR
         run: |
           docker push \
-            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
       - name: Configure kubectl
         run: |
@@ -115,7 +115,7 @@ jobs:
         working-directory: starter/backend/k8s
         run: |
           kustomize edit set image \
-            backend=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            backend=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
       - name: Deploy backend to EKS
         working-directory: starter/backend/k8s
